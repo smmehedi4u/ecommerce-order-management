@@ -62,6 +62,11 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified product.
      */
+    public function show(Request $request)
+    {
+        //
+    }
+
     public function edit(Request $request, Product $product)
     {
         if ($request->ajax()) {

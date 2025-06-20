@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('outlet_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['pending', 'accepted', 'cancelled', 'transferred'])->default('pending');
-            $table->decimal('total_price', 10, 2);
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->text('address');
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
+            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
     }

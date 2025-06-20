@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['outlet_id', 'status', 'total_price'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'status',
+        'total',
+        'outlet_id',
+    ];
 
     public function outlet() {
         return $this->belongsTo(Outlet::class);
