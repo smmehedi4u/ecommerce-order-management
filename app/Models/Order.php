@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'outlet_id', 'status', 'total_price'];
-
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
+    protected $fillable = ['outlet_id', 'status', 'total_price'];
 
     public function outlet() {
         return $this->belongsTo(Outlet::class);

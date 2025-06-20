@@ -1,7 +1,33 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuperAdmin\UserController;
+use App\Http\Controllers\SuperAdmin\OutletController;
+use App\Http\Controllers\SuperAdmin\ProductController;
+
+
+// Super Admin Dashboard
+Route::middleware(['auth', 'role:super_admin'])->group(function () {
+    Route::get('dashboard', fn() => view('backend.dashboard'));
+
+    Route::resource('users', UserController::class);
+
+    Route::resource('outlets', OutletController::class);
+
+    Route::resource('products', ProductController::class);
+});
+
+// Admin Dashboard
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', fn() => view('dashboards.admin'));
+});
+
+// Outlet In-Charge Dashboard
+Route::middleware(['auth', 'role:outlet_in_charge'])->group(function () {
+    Route::get('/outlet/dashboard', fn() => view('dashboards.outlet'));
+});
+
 
 Route::get('/', function () {
     return view('welcome');
