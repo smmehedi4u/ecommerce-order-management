@@ -13,7 +13,11 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::with(['items.product', 'outlet'])->get();
+        $orders = Order::with(['items.product', 'outlet'])
+        ->when(auth()->user()->isOutletInCharge(), function ($query) {
+            return $query->where('outlet_id', auth()->user()->outlet_id);
+        })
+        ->get();
 
         if ($request->ajax()) {
             return response()->json([

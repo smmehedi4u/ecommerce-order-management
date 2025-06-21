@@ -7,6 +7,7 @@ use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\SuperAdmin\OrderController;
 use App\Http\Controllers\SuperAdmin\OutletController;
 use App\Http\Controllers\SuperAdmin\ProductController;
+use App\Http\Controllers\SuperAdmin\TransferController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('add-to-cart/{product_id}', [HomeController::class, 'addToCart'])->name('cart.add');
@@ -17,12 +18,14 @@ Route::post('cart', [HomeController::class, 'checkout'])->name('checkout.store')
 
 
 // Super Admin Dashboard
-Route::middleware(['auth', 'role:super_admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', fn() => view('backend.dashboard'))->name('dashboard');
-    Route::resource('users', UserController::class);
-    Route::resource('outlets', OutletController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('users', UserController::class)->middleware('role:super_admin');
+    Route::resource('outlets', OutletController::class)->middleware('role:super_admin');
+    Route::resource('products', ProductController::class)->middleware('role:super_admin');
     Route::resource('orders', OrderController::class);
+    Route::get('transfers/create/{order}', [TransferController::class, 'create'])->name('transfers.create');
+    Route::resource('transfers', TransferController::class)->except(['create']);
 });
 
 // Admin Dashboard

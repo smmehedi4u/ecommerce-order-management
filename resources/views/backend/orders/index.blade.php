@@ -57,8 +57,7 @@
                                     <td style="padding: 10px; border: 1px solid #ccc;">
                                         ${{ number_format($item->price, 2) }}</td>
                                     <td style="padding: 10px; border: 1px solid #ccc;">
-                                        <form action="#" method="POST">
-                                            @csrf
+                                        <form action="{{ route('transfers.create', ['order' => $order->id]) }}" method="GET">
                                             <button type="submit"
                                                 style="background-color: #2563eb; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;">
                                                 Transfer
